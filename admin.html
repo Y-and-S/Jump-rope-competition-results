@@ -4,29 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기록 업로드 - 관리자 페이지</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
-    <script type="module" src="admin.js"></script>
     <script>
         // Firebase 초기화
         const firebaseConfig = {
             apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
             authDomain: "jumprope-2c211.firebaseapp.com",
             projectId: "jumprope-2c211",
-            storageBucket: "jumprope-2c211.appspot.com",
+            storageBucket: "jumprope-2c211.appspot.com", // storageBucket 주소 수정
             messagingSenderId: "555320477245",
             appId: "1:555320477245:web:3055122f711ca4557bcc54",
             measurementId: "G-Q3K7XT7QMX"
         };
 
+        // Firebase 초기화
         firebase.initializeApp(firebaseConfig);
+
+        // Firebase 서비스
         const storage = firebase.storage();
         const db = firebase.firestore();
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #005f73;
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #005f73;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0a9396;
+        }
+        #statusMessage {
+            text-align: center;
+            margin-top: 20px;
+            color: #005f73;
+        }
+    </style>
 </head>
 <body>
     <h1>기록 업로드</h1>
