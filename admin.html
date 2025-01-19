@@ -4,29 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기록 업로드 - 관리자 페이지</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
-    <script>
-        // Firebase 초기화
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
-            authDomain: "jumprope-2c211.firebaseapp.com",
-            projectId: "jumprope-2c211",
-            storageBucket: "jumprope-2c211.appspot.com", // storageBucket 주소 수정
-            messagingSenderId: "555320477245",
-            appId: "1:555320477245:web:3055122f711ca4557bcc54",
-            measurementId: "G-Q3K7XT7QMX"
-        };
-
-        // Firebase 초기화
-        firebase.initializeApp(firebaseConfig);
-
-        // Firebase 서비스 객체 생성
-        const storage = firebase.storage();
-        const db = firebase.firestore();
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,7 +53,30 @@
         <button type="button" id="uploadBtn">파일 업로드</button>
     </form>
     <div id="statusMessage"></div>
-    <script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase 초기화
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
+            authDomain: "jumprope-2c211.firebaseapp.com",
+            projectId: "jumprope-2c211",
+            storageBucket: "jumprope-2c211.appspot.com", // 수정된 storageBucket 주소
+            messagingSenderId: "555320477245",
+            appId: "1:555320477245:web:3055122f711ca4557bcc54",
+            measurementId: "G-Q3K7XT7QMX"
+        };
+
+        // Firebase 앱 및 서비스 초기화
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        const db = getFirestore(app);
+
+        // 파일 업로드 로직
         document.getElementById("uploadBtn").addEventListener("click", async () => {
             const fileInput = document.getElementById("fileInput");
             const statusMessage = document.getElementById("statusMessage");
@@ -87,8 +87,8 @@
             }
 
             const file = fileInput.files[0];
-            const storageRef = storage.ref(`uploads/${file.name}`);
-            const uploadTask = storageRef.put(file);
+            const storageRef = ref(storage, `uploads/${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
 
             uploadTask.on(
                 "state_changed",
@@ -102,12 +102,14 @@
                     statusMessage.textContent = `업로드 실패: ${error.message}`;
                 },
                 async () => {
-                    const downloadURL = await storageRef.getDownloadURL();
-                    console.log("업로드 성공! 다운로드 URL:", downloadURL);
-                    statusMessage.textContent = `업로드 성공! 다운로드 URL: ${downloadURL}`;
-
                     try {
-                        await db.collection("files").add({
+                        // 업로드 성공 시 다운로드 URL 가져오기
+                        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                        console.log("업로드 성공! 다운로드 URL:", downloadURL);
+                        statusMessage.textContent = `업로드 성공! 다운로드 URL: ${downloadURL}`;
+
+                        // Firestore에 파일 메타데이터 저장
+                        await addDoc(collection(db, "files"), {
                             name: file.name,
                             url: downloadURL,
                             uploadedAt: new Date(),
