@@ -1,6 +1,5 @@
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-
-const db = getFirestore();
+import { db } from "./firebase.js";
+import { collection, getDocs } from "firebase/firestore";
 
 document.getElementById("fetchRecordsBtn").addEventListener("click", async () => {
     const recordsList = document.getElementById("recordsList");
@@ -16,5 +15,6 @@ document.getElementById("fetchRecordsBtn").addEventListener("click", async () =>
         recordsList.innerHTML = html;
     } catch (error) {
         recordsList.textContent = `기록 불러오기 실패: ${error.message}`;
+        console.error(error);
     }
 });
