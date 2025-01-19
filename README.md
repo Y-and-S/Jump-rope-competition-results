@@ -1,1 +1,1 @@
-# Jump-rope-competition-results
+# Jump-rope-results
