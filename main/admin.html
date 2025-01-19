@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>줄넘기 대회 관리자 페이지</h1>
+        <a href="index.html">메인으로 돌아가기</a>
+    </header>
+    <main>
+        <section>
+            <h2>기록 업로드</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="excelFile" accept=".xlsx, .xls">
+                <button type="button" id="uploadBtn">업로드</button>
+            </form>
+        </section>
+        <section>
+            <h2>업로드된 기록 미리보기</h2>
+            <div id="previewTable"></div>
+        </section>
+    </main>
+</body>
+<script src="assets/js/admin.js"></script>
+</html>
