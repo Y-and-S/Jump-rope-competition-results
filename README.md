@@ -1,1 +1,1 @@
-# ump-rope-competition-results
+# Jump-rope-competition-results
