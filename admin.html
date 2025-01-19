@@ -4,11 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기록 업로드 - 관리자 페이지</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <script type="module" src="admin.js"></script>
+    <script>
+        // Firebase 초기화
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
+            authDomain: "jumprope-2c211.firebaseapp.com",
+            projectId: "jumprope-2c211",
+            storageBucket: "jumprope-2c211.appspot.com",
+            messagingSenderId: "555320477245",
+            appId: "1:555320477245:web:3055122f711ca4557bcc54",
+            measurementId: "G-Q3K7XT7QMX"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+        const db = firebase.firestore();
+    </script>
 </head>
 <body>
     <h1>기록 업로드</h1>
@@ -18,20 +36,49 @@
     </form>
     <div id="statusMessage"></div>
     <script>
-        // Firebase 설정 추가
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
-            authDomain: "jumprope-2c211.firebaseapp.com",
-            projectId: "jumprope-2c211",
-            storageBucket: "jumprope-2c211.firebasestorage.app",
-            messagingSenderId: "555320477245",
-            appId: "1:555320477245:web:3055122f711ca4557bcc54",
-            measurementId: "G-Q3K7XT7QMX"
-        };
+        document.getElementById("uploadBtn").addEventListener("click", async () => {
+            const fileInput = document.getElementById("fileInput");
+            const statusMessage = document.getElementById("statusMessage");
 
-        // Firebase 초기화
-        const app = firebase.initializeApp(firebaseConfig);
+            if (fileInput.files.length === 0) {
+                statusMessage.textContent = "파일을 선택해주세요!";
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const storageRef = storage.ref(`uploads/${file.name}`);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`업로드 진행 중: ${progress}%`);
+                    statusMessage.textContent = `업로드 진행 중: ${progress.toFixed(2)}%`;
+                },
+                (error) => {
+                    console.error("업로드 실패:", error);
+                    statusMessage.textContent = `업로드 실패: ${error.message}`;
+                },
+                async () => {
+                    const downloadURL = await storageRef.getDownloadURL();
+                    console.log("업로드 성공! 다운로드 URL:", downloadURL);
+                    statusMessage.textContent = `업로드 성공! 다운로드 URL: ${downloadURL}`;
+
+                    try {
+                        await db.collection("files").add({
+                            name: file.name,
+                            url: downloadURL,
+                            uploadedAt: new Date(),
+                        });
+                        statusMessage.textContent += " Firestore에 기록 저장 완료!";
+                    } catch (error) {
+                        console.error("Firestore 저장 실패:", error.message);
+                        statusMessage.textContent += ` Firestore 저장 실패: ${error.message}`;
+                    }
+                }
+            );
+        });
     </script>
-    <script src="assets/js/admin.js"></script>
 </body>
 </html>

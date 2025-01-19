@@ -15,7 +15,6 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     const storageRef = ref(storage, `uploads/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    // 업로드 상태 추적
     uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -45,16 +44,4 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
             }
         }
     );
-});
-document.getElementById("uploadBtn").addEventListener("click", () => {
-    console.log("업로드 버튼 클릭됨");
-    const fileInput = document.getElementById("fileInput");
-
-    if (fileInput.files.length === 0) {
-        console.error("파일이 선택되지 않았습니다!");
-        alert("파일을 선택해주세요!");
-        return;
-    }
-
-    console.log("선택된 파일:", fileInput.files[0].name);
 });
