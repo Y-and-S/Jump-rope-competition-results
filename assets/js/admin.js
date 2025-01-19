@@ -27,11 +27,9 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
             statusMessage.textContent = `업로드 실패: ${error.message}`;
         },
         async () => {
-            // 업로드 완료 후 다운로드 URL 가져오기
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             statusMessage.textContent = "업로드 성공!";
 
-            // Firestore에 파일 정보 저장
             try {
                 await addDoc(collection(db, "files"), {
                     name: file.name,

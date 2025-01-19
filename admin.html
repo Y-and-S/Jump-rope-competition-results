@@ -3,51 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <title>기록 업로드 - 관리자 페이지</title>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>줄넘기 대회 관리자 페이지</h1>
-        <a href="index.html">메인으로 돌아가기</a>
-    </header>
-    <main>
-        <section>
-            <h2>기록 업로드</h2>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="excelFile" accept=".xlsx, .xls">
-                <button type="button" id="uploadBtn">업로드</button>
-            </form>
-        </section>
-        <section>
-            <h2>업로드된 기록 미리보기</h2>
-            <div id="previewTable"></div>
-        </section>
-    </main>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    <h1>기록 업로드</h1>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".xlsx, .xls">
+        <button type="button" id="uploadBtn">파일 업로드</button>
+    </form>
+    <div id="statusMessage"></div>
+    <script>
+        // Firebase 설정 추가
         const firebaseConfig = {
-          apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
-          authDomain: "jumprope-2c211.firebaseapp.com",
-          projectId: "jumprope-2c211",
-          storageBucket: "jumprope-2c211.firebasestorage.app",
-          messagingSenderId: "555320477245",
-          appId: "1:555320477245:web:3055122f711ca4557bcc54",
-          measurementId: "G-Q3K7XT7QMX"
+            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
+            authDomain: "jumprope-2c211.firebaseapp.com",
+            projectId: "jumprope-2c211",
+            storageBucket: "jumprope-2c211.firebasestorage.app",
+            messagingSenderId: "555320477245",
+            appId: "1:555320477245:web:3055122f711ca4557bcc54",
+            measurementId: "G-Q3K7XT7QMX"
         };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="assets/js/admin.js"></script>
 </body>
-<script src="assets/js/admin.js"></script>
 </html>

@@ -1,10 +1,9 @@
-/* style.css */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #f4f4f4;
 }
 
 header {
@@ -14,56 +13,35 @@ header {
     text-align: center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-}
-
 header nav a {
     color: #fff;
     text-decoration: none;
     margin: 0 1rem;
-    font-size: 1.1rem;
 }
 
 header nav a:hover {
     text-decoration: underline;
 }
 
-main {
-    padding: 2rem;
-}
-
-footer {
+main, h1, h2 {
     text-align: center;
-    background: #023047;
-    color: #fff;
-    padding: 1rem 0;
     margin-top: 2rem;
 }
 
 button {
     background: #005f73;
-    color: #fff;
+    color: white;
     border: none;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
+    margin: 1rem 0;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 button:hover {
-    background: #023047;
+    background: #0a9396;
 }
 
-input, select {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-section {
-    margin-bottom: 2rem;
+div {
+    padding: 1rem;
 }
