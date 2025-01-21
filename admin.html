@@ -26,35 +26,7 @@
             <p id="uploadStatus" class="mt-4 text-sm"></p>
         </section>
 
-        <script>
-
-            // Upload File
-            document.getElementById('uploadButton').addEventListener('click', () => {
-                const fileInput = document.getElementById('excelFile');
-                const file = fileInput.files[0];
-
-                if (!file) {
-                    document.getElementById('uploadStatus').textContent = '파일을 선택해주세요.';
-                    return;
-                }
-
-                const storageRef = storage.ref(`uploads/${file.name}`);
-                const uploadTask = storageRef.put(file);
-
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        document.getElementById('uploadStatus').textContent = `업로드 진행률: ${progress.toFixed(2)}%`;
-                    }, 
-                    (error) => {
-                        document.getElementById('uploadStatus').textContent = `업로드 오류: ${error.message}`;
-                    }, 
-                    () => {
-                        document.getElementById('uploadStatus').textContent = '업로드 성공!';
-                    }
-                );
-            });
-        </script>
+        <script src="admin.js"></script>
     </main>
 
     <footer class="bg-blue-600 text-white py-4 mt-10">
@@ -62,29 +34,5 @@
             <p>&copy; 2025 점프싱크. 모든 권리 보유.</p>
         </div>
     </footer>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
-    authDomain: "jumprope-2c211.firebaseapp.com",
-    projectId: "jumprope-2c211",
-    storageBucket: "jumprope-2c211.firebasestorage.app",
-    messagingSenderId: "555320477245",
-    appId: "1:555320477245:web:3055122f711ca4557bcc54",
-    measurementId: "G-Q3K7XT7QMX"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-
 </body>
 </html>
