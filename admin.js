@@ -40,3 +40,5 @@ document.getElementById('uploadButton').addEventListener('click', () => {
         }
     );
 });
+console.log("Firebase initialized:", firebase.app().name);
+console.log("Storage bucket reference:", storage);
