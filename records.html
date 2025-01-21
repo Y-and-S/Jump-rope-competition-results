@@ -3,30 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기록 조회</title>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>점프싱크 기록</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>기록 조회</h1>
-    <button id="fetchRecordsBtn">기록 불러오기</button>
-    <div id="recordsList"></div>
-    <script>
-        // Firebase 설정 추가
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxf3XoTZTW7WdhQ0ISYc08cfpqRns1ARk",
-            authDomain: "jumprope-2c211.firebaseapp.com",
-            projectId: "jumprope-2c211",
-            storageBucket: "jumprope-2c211.firebasestorage.app",
-            messagingSenderId: "555320477245",
-            appId: "1:555320477245:web:3055122f711ca4557bcc54",
-            measurementId: "G-Q3K7XT7QMX"
-        };
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-2xl font-bold">점프싱크 기록</h1>
+            <a href="/admin.html" class="bg-white text-blue-600 px-4 py-2 rounded">관리자 로그인</a>
+        </div>
+    </header>
 
-        // Firebase 초기화
-        const app = firebase.initializeApp(firebaseConfig);
-    </script>
-    <script src="assets/js/records.js"></script>
+    <main class="container mx-auto py-10 px-6">
+        <h2 class="text-3xl font-bold mb-6">대회 기록</h2>
+        <div class="mb-6">
+            <input type="text" placeholder="이름으로 검색" class="border px-4 py-2 mr-2">
+            <select class="border px-4 py-2 mr-2">
+                <option value="">종목 선택</option>
+                <option value="speed">스피드</option>
+                <option value="freestyle">프리스타일</option>
+            </select>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">검색</button>
+        </div>
+        <table class="min-w-full bg-white border rounded shadow">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border px-4 py-2">배번</th>
+                    <th class="border px-4 py-2">기록</th>
+                    <th class="border px-4 py-2">이름</th>
+                    <th class="border px-4 py-2">참가부</th>
+                    <th class="border px-4 py-2">종목</th>
+                    <th class="border px-4 py-2">성별</th>
+                    <th class="border px-4 py-2">범위</th>
+                    <th class="border px-4 py-2">단체명</th>
+                    <th class="border px-4 py-2">소속명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border px-4 py-2">1</td>
+                    <td class="border px-4 py-2">95</td>
+                    <td class="border px-4 py-2">홍길동</td>
+                    <td class="border px-4 py-2">일반부</td>
+                    <td class="border px-4 py-2">스피드</td>
+                    <td class="border px-4 py-2">남</td>
+                    <td class="border px-4 py-2">성인</td>
+                    <td class="border px-4 py-2">점프팀</td>
+                    <td class="border px-4 py-2">서울</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="bg-blue-600 text-white py-4 mt-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 점프싱크. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
